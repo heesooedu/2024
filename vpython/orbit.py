@@ -32,13 +32,14 @@ moon_angular_speed = 86400*sqrt((G*(earth_mass+moon_mass)/moon_orbit_radius))/mo
 mars_augular_speed = 86400*sqrt((G*(mars_mass+sun_mass)/mars_orbit_radius))/mars_orbit_radius
 
 
-dt = 0.1  # 시간 간격
+dt = 1/86400   # 시간 간격 
 t = 0  # 초기 시간
 
 # 달을 우주선으로 생각하여 발사하는 것을 생각해볼 수 있음
+# 우주선 객체를 다시 만들어도 가능 -> 자취 방정식을 알아야함..
 
 while True:
-    rate(100)  # 초당 100회 반복으로 애니메이션 속도 제어
+    rate(86400)  # 초당 86400회 반복으로 애니메이션 속도 제어
     
     # 구체의 위치 업데이트 (원점을 중심으로 하는 회전)
     earth_x = earth_orbit_radius * cos(earth_angular_speed*t)
@@ -56,5 +57,5 @@ while True:
 
 
 
-     # 시간 업데이트
+    # 시간 업데이트 
     t += dt
