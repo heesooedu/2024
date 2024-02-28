@@ -21,10 +21,10 @@ planet = sphere(pos=vector(15, 0, 0), radius=0.2, color=color.red, make_trail=Tr
 
 
 # 애니메이션 속도
-dt = 0.1
+dt = 1/86400
 
 while True:
-    rate(300)  # 초당 프레임 수
+    rate(1/86400)  # 초당 프레임 수
 
     # 타원 궤도 계산
     r = a * (1 - e**2) / (1 + e * cos(angle))  # 타원 궤도 상의 행성과 초점 사이 거리
