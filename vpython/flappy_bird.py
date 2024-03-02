@@ -6,6 +6,7 @@ import random
 # 게임 설정
 scene.width = 600
 scene.height = 400
+scene.background = color.white
 gap_size = 6  # 장애물 사이의 공간
 wall_width = 1
 wall_interval = 20  # 장애물 사이의 간격
@@ -15,18 +16,23 @@ flap_strength = 5
 bird_velocity = 0
 
 # 새 생성
-bird = sphere(pos=vec(-10,0,0), radius=bird_radius, color=color.yellow)
+# bird_image = ['https://drive.google.com/file/d/1PKLOLBtFf1l3Je-jWsRmu9L4zAsKfyQS/view?usp=drive_link'] 
+bird = sphere(pos=vec(-10,0,0), radius=bird_radius, color = color.black )
 
-# 벽 생성 함수
-def create_wall(pos):
-    top = box(pos=pos + vec(0, (gap_size + wall_width) / 2, 0), size=vec(wall_width, 10-gap_size, 1), color=color.green)
-    bottom = box(pos=pos - vec(0, (gap_size + wall_width) / 2, 0), size=vec(wall_width, 10-gap_size, 1), color=color.green)
-    return top, bottom
+# # 벽 생성 함수
+# def create_wall(pos):
+#     top = box(pos=pos + vec(0, (gap_size + wall_width) / 2, 0), size=vec(wall_width, 10-gap_size, 1), color=color.green)
+#     bottom = box(pos=pos - vec(0, (gap_size + wall_width) / 2, 0), size=vec(wall_width, 10-gap_size, 1), color=color.green)
+#     return top, bottom
 
-# 초기 벽 생성
+# # 초기 벽 생성
+# walls = []
+# for i in range(5):
+#     walls.extend(create_wall(vec(i * wall_interval, random.uniform(-3, 3), 0)))
+
 walls = []
-for i in range(5):
-    walls.extend(create_wall(vec(i * wall_interval, random.uniform(-3, 3), 0)))
+up_walls = box(pos = vec(0,10,0), size = (1,100,0))
+down_walls = box(pos = vec(0,-10,0), size = (1,100,0))
 
 # 마우스 클릭 이벤트 처리
 def on_click(evt):
@@ -36,6 +42,8 @@ def on_click(evt):
 # 마우스 클릭 이벤트 연결
 scene.bind('click', on_click)
 
+
+# 게임오버 플레그
 game_over_flag = True
     
 while game_over_flag:
