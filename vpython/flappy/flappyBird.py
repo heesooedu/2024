@@ -38,13 +38,19 @@ for i in range(20) :
 # 새 생성
     
 bird = sphere(pos = vec(0,0,0), radius = 0.5, make_trail = True)
+#scene.camera.follow(bird)
 
+scene.camera.pos = bird.pos + vec(0,0,30)
+scene.camera.range = 10
 
-bird.vx = vec(3,0,0) # 가독성을 위해 x축 방향으로 속도를 vx라 표기함
+bird.vx = vec(5,0,0) # 가독성을 위해 x축 방향으로 속도를 vx라 표기함
 bird.vy = vec(0,-1,0) # y축 방향으로 속도를 vy라 표기함
 bird.jump = vec(0,3,0) # 수직으로 점프!
 
-while True :
+game_Flag = True
+
+#게임 플레이
+while game_Flag :
     rate(100) # 값을 바꿔 움직임이 조금 더 부드럽게 바꿔보세요
     
     # x축 움직임
@@ -57,13 +63,24 @@ while True :
     k = keysdown()
     if 'up' in k : # 방향키 위가 눌렸을 때 y축 속도를 위로 바꾸기
         bird.vy = bird.jump
-        
-    # 카메라 위치(시점)가 새를 따라가도록 조정
-    # 위에서 내려다보고 있는 느낌
-    scene.camera.pos = bird.pos + vec(3,0,30)
     
+    scene.camera.pos = bird.pos + vec(0,0,30)
+    scene.camera.range = 10
+
+    # 충돌 감지
     
+    # 벽과의 충돌 검사
+    if bird.pos.y >= 9 or bird.pos.y <= -9 :
+        game_Flag = False
     
-    
-    
-        
+    for wall_pair in walls:
+        top_wall, bottom_wall = wall_pair
+        # x 위치가 가까운지 확인
+        if abs(bird.pos.x - top_wall.pos.x) < wall_width / 2 + bird.radius:
+            # y 위치가 벽 사이에 없는지 확인
+            if bird.pos.y > top_wall.pos.y - top_wall.size.y / 2 or bird.pos.y < bottom_wall.pos.y + bottom_wall.size.y / 2:
+                game_Flag = False
+                
+                break  # 충돌이 발생하면 게임 루프를 중단
+
+text(text = 'Game Over', align = 'center', pos = bird.pos)
