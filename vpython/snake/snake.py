@@ -47,7 +47,7 @@ direction = vector(1, 0, 0)
 #scene.bind('keydown', onKeyDown)
 
 while True:
-    rate(10)  # 게임 속도 조절
+    rate(20)  # 게임 속도 조절
     
     key = keysdown()
     if 'left' in key :
@@ -83,9 +83,13 @@ while True:
     if (new_head.pos.x > scene.range) or (new_head.pos.x < -scene.range) or (new_head.pos.y > scene.range) or (new_head.pos.y < -scene.range) :
         print("Game Over")
         break
-    # 자시 자신과 충돌했는지 검사
+
+    # 자기 자신과 충돌했는지 검사
+    all_pos = []
     for i in range(1, len(snake)) :
-        if snake[i].pos == new_head.pos :
-            break
+        all_pos.append(snake[i].pos)
+    if new_head.pos in all_pos :
+        print("Game Over")
+        break
 
     
